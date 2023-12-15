@@ -15,10 +15,12 @@ class RoutePlanner {
     void AStarSearch();
 
     // The following methods have been made public so we can test them individually.
-    void AddNeighbors(RouteModel::Node *current_node);
+    static bool compareGHValue(const RouteModel::Node* anode, const RouteModel::Node* bnode);
     float CalculateHValue(RouteModel::Node const *node);
     std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *);
     RouteModel::Node *NextNode();
+    static bool compareGHValues(const RouteModel::Node* anode, const RouteModel::Node* bnode);
+    void AddNeighbors(RouteModel::Node *current_node);
 
   private:
     // Add private variables or methods declarations here.

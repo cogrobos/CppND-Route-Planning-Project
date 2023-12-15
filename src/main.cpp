@@ -56,14 +56,26 @@ int main(int argc, const char **argv)
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
 
+    float start_x, start_y, end_x, end_y;
+
+    std::cout << "Enter start_x limit 0 to 100 : " << std::endl;
+    std::cin >> start_x;
+    std::cout << "Enter start_y limit 0 to 100 : " << std::endl;
+    std::cin >> start_y;
+    std::cout << "Enter end_x limit 0 to 100 : " << std::endl;
+    std::cin >> end_x;
+    std::cout << "Enter end_y limit 0 to 100 : " << std::endl;
+    std::cin >> end_y;
+
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    //RoutePlanner route_planner{model, 10.0, 10.0, 90.0, 90.0};
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
     route_planner.AStarSearch();
 
-    std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
+    std::cout << "Total Distance mapped : " << route_planner.GetDistance() << " meters. \n";
 
     // Render results of search.
     Render render{model};
@@ -75,5 +87,6 @@ int main(int argc, const char **argv)
     display.draw_callback([&](io2d::output_surface& surface){
         render.Display(surface);
     });
+    
     display.begin_show();
 }
