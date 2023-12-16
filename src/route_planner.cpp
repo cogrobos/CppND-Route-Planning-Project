@@ -89,16 +89,22 @@ RouteModel::Node *RoutePlanner::NextNode() {
 // - The returned vector should be in the correct order: the start node should be the first element
 //   of the vector, the end node should be the last element.
 
-std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node) {
-    // Create path_found vector
-    distance = 0.0f;
+std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node* current_node) {
+
     std::vector<RouteModel::Node> path_found;
+    // keep looping until it finds the start node, whose parent is nullptr
+    RouteModel::Node* curNode = current_node;
+    while (curNode) {
+        path_found.push_back(*curNode);
+        // Also keep track of the total path distance
+        if (curNode->parent) this->distance += curNode->distance(*curNode->parent); 
+        curNode = curNode->parent;
+    }
 
-    // TODO: Implement your solution here.
+    // Scale by multiplying by the model's scale
+    this->distance *= m_Model.MetricScale();
 
-    distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
     return path_found;
-
 }
 
 
