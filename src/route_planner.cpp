@@ -62,12 +62,12 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node*
 
     std::vector<RouteModel::Node> path_found;
     // keep looping until it finds the start node, whose parent is nullptr
-    RouteModel::Node* curNode = current_node;
-    while (curNode) {
-        path_found.push_back(*curNode);
+    RouteModel::Node* currentNode = current_node;
+    while (currentNode) {
+        path_found.push_back(*currentNode);
         // Also keep track of the total path distance
-        if (curNode->parent) this->distance += curNode->distance(*curNode->parent); 
-        curNode = curNode->parent;
+        if (currentNode->parent) this->distance += currentNode->distance(*currentNode->parent); 
+        currentNode = currentNode->parent;
     }
 
     // Scale by multiplying by the model's scale
